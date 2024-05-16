@@ -18,9 +18,3 @@ if [ ! -d .bacalhau ]; then
     mkdir .bacalhau/data/ipfs
     export BACALHAU_SERVE_IPFS_PATH=.bacalhau/data/ipfs
 fi
-
-.bacalhau/bacalhau serve \
-    --node-type compute,requester \
-    --peer none \
-    --private-internal-ipfs=false \
-    --job-selection-accept-networked
