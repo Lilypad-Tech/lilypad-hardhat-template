@@ -1,5 +1,15 @@
 services:
 
+  lilypad:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    ports:
+      - 8080:8080
+    #entrypoint: tail -f /dev/null
+    networks:
+      - lilypad
+
   ipfs:
     image: ipfs/kubo:v0.25.0
     ports:

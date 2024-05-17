@@ -6,6 +6,8 @@ export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DEFAULT_DATA_DIR="/data/geth"
 export DATA_DIRECTORY=${DATA_DIRECTORY:="$DEFAULT_DATA_DIR"}
 export NETWORK=${NETWORK:="geth"}
+# export LILYPAD_BIN=.lilypad/lilypad
+export LILYPAD_BIN=${docker-compose run -i lilypad lilypad}
 
 # if "$DIR/.env" exists then source it
 if [[ -f "$DIR/.env" ]]; then
@@ -272,7 +274,7 @@ function run() {
   export WEB3_PRIVATE_KEY=$JOB_CREATOR_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
-  .lilypad/lilypad run "$@"
+  $LILYPAD_BIN run "$@"
 }
 
 function runsdxl() {
@@ -290,7 +292,7 @@ function runsdxl() {
   local model="$1"
   shift  # Remove the first argument, so "$@" contains only the second one
   local prompt="$@"
-  .lilypad/lilypad run $model -i "PromptEnv=$prompt"
+  $LILYPAD_BIN run $model -i "PromptEnv=$prompt"
 }
 
 function solver() {
@@ -302,7 +304,7 @@ function solver() {
   export SERVER_PORT=8080
   export SERVER_URL=http://127.0.0.1:8080
   export WEB3_RPC_URL=ws://127.0.0.1:8546
-  .lilypad/lilypad solver "$@"
+  $LILYPAD_BIN solver "$@"
 }
 
 # we run the jobcreator as the solver
@@ -312,7 +314,7 @@ function jobcreator() {
   export WEB3_PRIVATE_KEY=$SOLVER_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
-  .lilypad/lilypad jobcreator "$@"
+  $LILYPAD_BIN jobcreator "$@"
 }
 
 function resource-provider() {
@@ -322,7 +324,7 @@ function resource-provider() {
   export WEB3_PRIVATE_KEY=$RESOURCE_PROVIDER_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
-  .lilypad/lilypad resource-provider "$@"
+  $LILYPAD_BIN resource-provider "$@"
 }
 
 function mediator() {
@@ -332,7 +334,7 @@ function mediator() {
   export WEB3_PRIVATE_KEY=$MEDIATOR_PRIVATE_KEY
   export WEB3_DIRECTORY_ADDRESS=$DIRECTORY_ADDRESS
   export SERVICE_SOLVER=$SOLVER_ADDRESS
-  .lilypad/lilypad mediator "$@"
+  $LILYPAD_BIN mediator "$@"
 }
 
 ############################################################################
