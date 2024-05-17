@@ -1,5 +1,6 @@
 echo "🪷 Starting Lilypad services ... 🪷"
 docker-compose up -d
+sleep 5
 ./stack fund-admin
 ./stack fund-services-ether
 ./stack balances

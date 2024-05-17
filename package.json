@@ -53,6 +53,8 @@
     "lilypad:start": "./scripts/start.sh",
     "lilypad:clean": "rm -rf .lilypad",
     "lilypad:cowsay": "hardhat run scripts/run-cowsay-onchain.ts",
+    "lilypad:up": "./up.sh",
+    "lilypad:down": "./down.sh",
     "node": "hardhat node --network hardhat",
     "deploy": "yes | hardhat ignition deploy ./ignition/modules/LilypadControllerModule.ts --network geth",
     "clean": "hardhat clean && rm -rf ignition/deployments deployments artifacts cache",

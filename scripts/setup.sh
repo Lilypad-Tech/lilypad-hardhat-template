@@ -16,8 +16,10 @@ if [ ! -d $LILYPAD_DIR ]; then
     # LILYPAD_BINARY="lilypad-darwin-arm64"
     LILYPAD_BINARY="lilypad-linux-amd64"
 
+    sudo apt update
+    sudo apt install libc6 -y
     wget https://github.com/Lilypad-Tech/lilypad/releases/download/$LILYPAD_VERSION/$LILYPAD_BINARY
-    tar xfv $LILYPAD_BINARY
+    #tar xfv $LILYPAD_BINARY
     mv $LILYPAD_BINARY $LILYPAD_DIR/lilypad
     chmod +x $LILYPAD_DIR/lilypad
     rm $LILYPAD_BINARY
