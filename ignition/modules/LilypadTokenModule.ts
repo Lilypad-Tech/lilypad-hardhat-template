@@ -1,7 +1,7 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import {
   DEFAULT_TOKEN_SUPPLY,
-} from '../../utils/web3'
+} from '../../utils/constants'
 
 export default buildModule("LilypadTokenModule", (m) => {
   const admin = m.getAccount(0);

@@ -80,6 +80,10 @@ const config: HardhatUserConfig = {
         mnemonic,
       },
       chainId: chainIds.hardhat,
+      ignition: {
+        maxFeePerGasLimit: 50_000_000_000n, // 50 gwei
+        maxPriorityFeePerGas: 2_000_000_000n, // 2 gwei
+      },
     },
     ganache: {
       accounts: {

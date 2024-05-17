@@ -1,4 +1,5 @@
 node_modules
 deployments
-bacalhau
-.bacalhau
+bacalhau*
+.lilypad
+types
