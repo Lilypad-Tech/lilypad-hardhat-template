@@ -7,7 +7,7 @@ export DEFAULT_DATA_DIR="/data/geth"
 export DATA_DIRECTORY=${DATA_DIRECTORY:="$DEFAULT_DATA_DIR"}
 export NETWORK=${NETWORK:="geth"}
 # export LILYPAD_BIN=.lilypad/lilypad
-export LILYPAD_BIN=${docker-compose run -i lilypad lilypad}
+export LILYPAD_BIN=${docker-compose run -i lilypad}
 
 # if "$DIR/.env" exists then source it
 if [[ -f "$DIR/.env" ]]; then
@@ -304,7 +304,14 @@ function solver() {
   export SERVER_PORT=8080
   export SERVER_URL=http://127.0.0.1:8080
   export WEB3_RPC_URL=ws://127.0.0.1:8546
-  $LILYPAD_BIN solver "$@"
+  docker-compose run -i \
+    -e WEB3_PRIVATE_KEY=$SOLVER_PRIVATE_KEY \
+    -e JOB_CREATOR_ADDRESS=$JOB_CREATOR_ADDRESS \
+    -e SERVICE_MEDIATORS=$MEDIATOR_ADDRESS \
+    -e SERVER_PORT=8080 \
+    -e SERVER_URL=http://0.0.0.0:8080 \
+    -e WEB3_RPC_URL=ws://geth:8546 \ 
+    lilypad solver "$@"
 }
 
 # we run the jobcreator as the solver

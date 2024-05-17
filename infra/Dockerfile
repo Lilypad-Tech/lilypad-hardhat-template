@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:jammy
 
 ARG arch=amd64
 ENV LILYPAD_VERSION="v2.0.0-7b61040"
