@@ -3,12 +3,12 @@ import LilypadTokenModule from "./LilypadTokenModule";
 
 export default buildModule("LilypadOnChainJobCreatorModule", (m) => {
   const admin = m.getAccount(0);
-  const solver = m.getAccount(1);
+  const solver = m.getAccount(2);
   const { token } = m.useModule(LilypadTokenModule);
   const jobCreator = m.contract("LilypadOnChainJobCreator", [], {
     from: admin,
   });
-  
+
   const example = m.contract("ExampleClient", [], {
     from: admin,
   });

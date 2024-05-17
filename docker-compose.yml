@@ -21,20 +21,25 @@ services:
       - JOB_CREATOR_ADDRESS=${JOB_CREATOR_ADDRESS}
       - SERVICE_MEDIATORS=${MEDIATOR_ADDRESS}
       - SERVER_PORT=8080
-      - SERVER_URL=http://127.0.0.1:8080
+      - SERVER_HOST=0.0.0.0
+      - SERVER_URL=http://10.5.0.2:8080
       - WEB3_RPC_URL=ws://geth:8546
     entrypoint: [ "lilypad", "solver" ]
     networks:
-      - lilypad
+      lilypad:
+        ipv4_address: 10.5.0.2
+    depends_on:
+      geth:
+        condition: service_healthy
+    env_file:
+      - .env
+      - .env.addr
     healthcheck:
       test: [ "CMD-SHELL", " netstat -an | grep -q 8080" ]
       interval: 2s
       timeout: 5s
-      retries: 30
+      retries: 5
       start_period: 10s
-    depends_on:
-      geth:
-        condition: service_healthy
 
   mediator:
     build:
@@ -45,12 +50,22 @@ services:
       - WEB3_DIRECTORY_ADDRESS=${DIRECTORY_ADDRESS}
       - SERVICE_SOLVER=${SOLVER_ADDRESS}
       - WEB3_RPC_URL=ws://geth:8546
-    entrypoint: [ "lilypad", "mediator" ]
+    entrypoint:
+      [
+        "lilypad",
+        "mediator",
+        "--bacalhau-api-host",
+        "bacalhau"
+      ]
     networks:
-      - lilypad
+      lilypad:
+        ipv4_address: 10.5.0.3
     depends_on:
       solver:
         condition: service_healthy
+    env_file:
+      - .env
+      - .env.addr
 
   resource-provider:
     build:
@@ -61,27 +76,57 @@ services:
       - SERVICE_MEDIATORS=${MEDIATOR_ADDRESS}
       - SERVICE_SOLVER=${SOLVER_ADDRESS}
       - WEB3_RPC_URL=ws://geth:8546
-    entrypoint: [ "lilypad", "resource-provider" ]
+    entrypoint:
+      [
+        "lilypad",
+        "resource-provider",
+        "--bacalhau-api-host",
+        "bacalhau"
+      ]
     networks:
-      - lilypad
+      lilypad:
+        ipv4_address: 10.5.0.4
     depends_on:
       solver:
         condition: service_healthy
       mediator:
         condition: service_started
+    env_file:
+      - .env
+      - .env.addr
 
-  ipfs:
-    image: ipfs/kubo:v0.25.0
-    ports:
-      - 4001:4001
-      - 4002:4002/udp
-      - 4003:4003
-      - 5001:5001
-    entrypoint: /bin/sh
-    command: >
-      -c "ipfs init && ipfs daemon --migrate=true --enable-gc=true --enable-pubsub-experiment"
+  jobcreator:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    environment:
+      - WEB3_PRIVATE_KEY=${SOLVER_PRIVATE_KEY}
+      - SERVICE_SOLVER=${SOLVER_ADDRESS}
+      - SERVICE_MEDIATORS=${MEDIATOR_ADDRESS}
+      - WEB3_RPC_URL=ws://geth:8546
+    entrypoint: [ "lilypad", "jobcreator" ]
     networks:
-      - lilypad
+      lilypad:
+        ipv4_address: 10.5.0.5
+    env_file:
+      - .env
+      - .env.addr
+
+  #ipfs:
+  #  image: ipfs/kubo:v0.25.0
+  #  ports:
+  #    - 4001:4001
+  #    - 4002:4002/udp
+  #    - 4003:4003
+  #    - 5001:5001
+  #  entrypoint: /bin/sh
+  #  command: >
+  #    -c "ipfs init && ipfs daemon --migrate=true --enable-gc=true --enable-pubsub-experiment"
+  #  networks:
+  #    lilypad:
+  #      ipv4_address: 10.5.0.6
+  #  env_file:
+  #    - .env
 
   bacalhau:
     image: ghcr.io/bacalhau-project/bacalhau:v1.0.3
@@ -91,7 +136,10 @@ services:
       - 1235:1235/udp
     entrypoint: bacalhau serve --node-type compute,requester --peer none --private-internal-ipfs=false --job-selection-accept-networked
     networks:
-      - lilypad
+      lilypad:
+        ipv4_address: 10.5.0.7
+    env_file:
+      - .env
 
   geth:
     image: ethereum/client-go:v1.13.5
@@ -102,7 +150,8 @@ services:
     volumes:
       - .data:/data/geth
     networks:
-      - lilypad
+      lilypad:
+        ipv4_address: 10.5.0.8
     healthcheck:
       #test: wget http://localhost:8545
       test: [ "CMD-SHELL", " netstat -an | grep -q 8545" ]
@@ -110,6 +159,13 @@ services:
       timeout: 5s
       retries: 30
       start_period: 10s
+    env_file:
+      - .env
 
 networks:
   lilypad:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
