@@ -1,11 +1,11 @@
 # Hardhat Template [![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat] [![License: MIT][license-badge]][license]
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/10d9e/lilypad-hardhat-template)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Lilypad-Tech/lilypad-hardhat-template)
 
-[gitpod]: https://gitpod.io/#https://github.com/10d9e/lilypad-hardhat-template
+[gitpod]: https://gitpod.io/#https://github.com/Lilypad-Tech/lilypad-hardhat-template
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
-[gha]: https://github.com/10d9e/lilypad-hardhat-template/actions
-[gha-badge]: https://github.com/10d9e/lilypad-hardhat-template/actions/workflows/ci.yml/badge.svg
+[gha]: https://github.com/Lilypad-Tech/lilypad-hardhat-template/actions
+[gha-badge]: https://github.com/Lilypad-Tech/lilypad-hardhat-template/actions/workflows/ci.yml/badge.svg
 [hardhat]: https://hardhat.org/
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
 [license]: https://opensource.org/licenses/MIT
