@@ -13,7 +13,8 @@ if [ ! -d $LILYPAD_DIR ]; then
     # install lilypad
     echo "Installing Lilypad"
     LILYPAD_VERSION="v2.0.0-7b61040"
-    LILYPAD_BINARY="lilypad-darwin-arm64"
+    # LILYPAD_BINARY="lilypad-darwin-arm64"
+    LILYPAD_BINARY="lilypad-linux-amd64"
 
     wget https://github.com/Lilypad-Tech/lilypad/releases/download/$LILYPAD_VERSION/$LILYPAD_BINARY
     tar xfv $LILYPAD_BINARY
@@ -22,9 +23,10 @@ if [ ! -d $LILYPAD_DIR ]; then
     rm $LILYPAD_BINARY
 
     echo "Installing Bacalhau"
-    # BACALHAU_BINARY="bacalhau_v1.0.3_linux_amd64.tar.gz"
+    # BACALHAU_BINARY="bacalhau_v1.0.3_darwin_arm64.tar.gz"
+    BACALHAU_BINARY="bacalhau_v1.0.3_linux_amd64.tar.gz"
     BACALHAU_VERSION="v1.0.3"
-    BACALHAU_BINARY="bacalhau_v1.0.3_darwin_arm64.tar.gz"
+    
     # install the latest bacalhau which works with GPUs (https://github.com/bacalhau-project/bacalhau/issues/2858)    
     wget https://github.com/bacalhau-project/bacalhau/releases/download/$BACALHAU_VERSION/$BACALHAU_BINARY
     

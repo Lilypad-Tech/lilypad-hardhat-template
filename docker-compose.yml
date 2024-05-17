@@ -1,0 +1,44 @@
+services:
+
+  ipfs:
+    image: ipfs/kubo:v0.25.0
+    ports:
+      - 4001:4001
+      - 4002:4002/udp
+      - 4003:4003
+      - 5001:5001
+    entrypoint: /bin/sh
+    command: >
+      -c "ipfs init && ipfs daemon --migrate=true --enable-gc=true --enable-pubsub-experiment"
+    networks:
+      - lilypad
+
+  bacalhau:
+    image: ghcr.io/bacalhau-project/bacalhau:v1.0.3
+    ports:
+      - 1234:1234
+      - 1235:1235
+      - 1235:1235/udp
+    entrypoint: bacalhau serve --node-type compute,requester --peer none --private-internal-ipfs=false --job-selection-accept-networked
+    networks:
+      - lilypad
+
+  geth:
+    image: ethereum/client-go:v1.13.5
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+    entrypoint: geth --datadir /data/geth --dev --ws --ws.api web3,eth,net --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins '*' --http --http.api web3,eth,net --http.addr 0.0.0.0 --http.corsdomain '*' --http.port 8545 --http.vhosts '*'
+    volumes:
+      - .data:/data/geth
+    networks:
+      - lilypad
+    healthcheck:
+      test: wget http://localhost:8545
+      interval: 2s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+networks:
+  lilypad:

@@ -21,8 +21,6 @@ import {
   ExampleClient,
 } from '../types'
 
-const deployed_addresses: { [key: string]: string } = require('../ignition/deployments/chain-31337/deployed_addresses.json')
-
 /*
 
   CONSTANTS
@@ -128,20 +126,22 @@ export async function fundAccountsWithTokens(
 export async function connectContract<T extends any>(
   name: string,
 ): Promise<T> {
-  const deployment = await hre.deployments.get(name)
-  const factory = await hre.ethers.getContractFactory(name)
-  const contract = factory.attach(deployment.address) as unknown as T
+  //const deployment = await hre.deployments.get(name)
+  const deployed_addresses: { [key: string]: string } = require('../ignition/deployments/chain-1337/deployed_addresses.json')
+  const address = deployed_addresses[name];
+  const contractName = name.split('#')[1]
+  console.log(`Connecting to ${contractName} at ${address}`)
+
+  const factory = await hre.ethers.getContractFactory(contractName)
+  const contract = factory.attach(address) as unknown as T
   return contract
 }
 
 export async function getContractAddress(
   name: string,
 ): Promise<AddressLike> {
+  const deployed_addresses: { [key: string]: string } = require('../ignition/deployments/chain-1337/deployed_addresses.json')
   return deployed_addresses[name];
-  // return deployed_addresses['LilypadControllerModule#LilypadController'] 
-
-  //const deployment = await hre.deployments.get(name)
-  //return deployment.address
 }
 
 /*

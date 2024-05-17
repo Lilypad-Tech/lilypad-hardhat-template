@@ -44,8 +44,9 @@ function geth() {
 }
 
 function geth-command() {
-  docker exec -i geth geth --exec "$@" attach /data/geth/geth.ipc
+  docker-compose exec -i geth geth --exec "$@" attach /data/geth/geth.ipc
 }
+
 
 ############################################################################
 ############################################################################
@@ -210,7 +211,6 @@ function go-bindings() {
 function compile-contracts() {
   (
     set -euo pipefail
-    cd hardhat
     npx hardhat compile
   )
   go-bindings
@@ -219,7 +219,6 @@ function compile-contracts() {
 function deploy-contracts() {
   (
     set -euo pipefail
-    cd hardhat
     npx hardhat deploy --network "$NETWORK"
   )
 }
@@ -269,6 +268,7 @@ function run-cowsay-onchain() {
 function run() {
   source .env
   eval $(./stack print-local-dev-env)
+  export WEB3_RPC_URL=ws://127.0.0.1:8546
   export WEB3_PRIVATE_KEY=$JOB_CREATOR_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
@@ -301,7 +301,7 @@ function solver() {
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
   export SERVER_PORT=8080
   export SERVER_URL=http://127.0.0.1:8080
-  export WEB3_RPC_URL=ws://127.0.0.1:8545
+  export WEB3_RPC_URL=ws://127.0.0.1:8546
   .lilypad/lilypad solver "$@"
 }
 
@@ -318,7 +318,7 @@ function jobcreator() {
 function resource-provider() {
   source .env
   eval $(./stack print-local-dev-env)
-  export WEB3_RPC_URL=ws://localhost:8545
+  export WEB3_RPC_URL=ws://localhost:8546
   export WEB3_PRIVATE_KEY=$RESOURCE_PROVIDER_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
@@ -328,7 +328,7 @@ function resource-provider() {
 function mediator() {
   source .env
   eval $(./stack print-local-dev-env)
-  export WEB3_RPC_URL=ws://localhost:8545
+  export WEB3_RPC_URL=ws://localhost:8546
   export WEB3_PRIVATE_KEY=$MEDIATOR_PRIVATE_KEY
   export WEB3_DIRECTORY_ADDRESS=$DIRECTORY_ADDRESS
   export SERVICE_SOLVER=$SOLVER_ADDRESS

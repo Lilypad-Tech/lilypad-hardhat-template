@@ -3,3 +3,4 @@ deployments
 bacalhau*
 .lilypad
 types
+.data
