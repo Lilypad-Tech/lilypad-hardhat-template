@@ -19,7 +19,7 @@ import {
   LilypadOnChainJobCreator,
   LilypadUsers,
   ExampleClient,
-} from '../types'
+} from '../typechain-types'
 
 /*
 
@@ -29,6 +29,9 @@ import {
 
 // how much ether to send to each account
 export const DEFAULT_ETHER_PER_ACCOUNT = ethers.parseEther('1000')
+
+// a billion tokens in total
+export const DEFAULT_TOKEN_SUPPLY = ethers.parseEther('1000000000')
 
 // each service gets 100000 tokens
 export const DEFAULT_TOKENS_PER_ACCOUNT = ethers.parseEther('100000')
@@ -126,22 +129,17 @@ export async function fundAccountsWithTokens(
 export async function connectContract<T extends any>(
   name: string,
 ): Promise<T> {
-  //const deployment = await hre.deployments.get(name)
-  const deployed_addresses: { [key: string]: string } = require('../ignition/deployments/chain-1337/deployed_addresses.json')
-  const address = deployed_addresses[name];
-  const contractName = name.split('#')[1]
-  console.log(`Connecting to ${contractName} at ${address}`)
-
-  const factory = await hre.ethers.getContractFactory(contractName)
-  const contract = factory.attach(address) as unknown as T
+  const deployment = await hre.deployments.get(name)
+  const factory = await hre.ethers.getContractFactory(name)
+  const contract = factory.attach(deployment.address) as unknown as T
   return contract
 }
 
 export async function getContractAddress(
   name: string,
 ): Promise<AddressLike> {
-  const deployed_addresses: { [key: string]: string } = require('../ignition/deployments/chain-1337/deployed_addresses.json')
-  return deployed_addresses[name];
+  const deployment = await hre.deployments.get(name)
+  return deployment.address
 }
 
 /*
@@ -150,11 +148,11 @@ export async function getContractAddress(
 
 */
 export async function connectStorage() {
-  return connectContract<LilypadStorage>('LilypadStorageModule#LilypadStorage')
+  return connectContract<LilypadStorage>('LilypadStorage')
 }
 
 export async function getStorageAddress() {
-  return getContractAddress('LilypadStorageModule#LilypadStorage')
+  return getContractAddress('LilypadStorage')
 }
 
 /*
@@ -163,11 +161,11 @@ export async function getStorageAddress() {
 
 */
 export async function connectMediation() {
-  return connectContract<LilypadMediationRandom>('LilypadMediationRandomModule#LilypadMediationRandom')
+  return connectContract<LilypadMediationRandom>('LilypadMediationRandom')
 }
 
 export async function getMediationAddress() {
-  return getContractAddress('LilypadMediationRandomModule#LilypadMediationRandom')
+  return getContractAddress('LilypadMediationRandom')
 }
 
 /*
@@ -176,11 +174,11 @@ export async function getMediationAddress() {
 
 */
 export async function connectToken() {
-  return connectContract<LilypadToken>('LilypadTokenModule#LilypadToken')
+  return connectContract<LilypadToken>('LilypadToken')
 }
 
 export async function getTokenAddress() {
-  return getContractAddress('LilypadTokenModule#LilypadToken')
+  return getContractAddress('LilypadToken')
 }
 
 /*
@@ -189,11 +187,11 @@ export async function getTokenAddress() {
 
 */
 export async function connectPayments() {
-  return connectContract<LilypadPayments>('LilypadPaymentsModule#LilypadPayments')
+  return connectContract<LilypadPayments>('LilypadPayments')
 }
 
 export async function getPaymentsAddress() {
-  return getContractAddress('LilypadPaymentsModule#LilypadPayments')
+  return getContractAddress('LilypadPayments')
 }
 
 
@@ -203,11 +201,11 @@ export async function getPaymentsAddress() {
 
 */
 export async function connectJobManager() {
-  return connectContract<LilypadOnChainJobCreator>('LilypadOnChainJobCreatorModule#LilypadOnChainJobCreator')
+  return connectContract<LilypadOnChainJobCreator>('LilypadOnChainJobCreator')
 }
 
 export async function getJobManagerAddress() {
-  return getContractAddress('LilypadOnChainJobCreatorModule#LilypadOnChainJobCreator')
+  return getContractAddress('LilypadOnChainJobCreator')
 }
 
 
@@ -217,11 +215,11 @@ export async function getJobManagerAddress() {
 
 */
 export async function connectUsers() {
-  return connectContract<LilypadUsers>('LilypadUsersModule#LilypadUsers')
+  return connectContract<LilypadUsers>('LilypadUsers')
 }
 
 export async function getUsersAddress() {
-  return getContractAddress('LilypadUsersModule#LilypadUsers')
+  return getContractAddress('LilypadUsers')
 }
 
 /*
@@ -230,11 +228,11 @@ export async function getUsersAddress() {
 
 */
 export async function connectExampleClient() {
-  return connectContract<ExampleClient>('LilypadOnChainJobCreatorModule#ExampleClient')
+  return connectContract<ExampleClient>('ExampleClient')
 }
 
 export async function getExampleClientAddress() {
-  return getContractAddress('LilypadOnChainJobCreatorModule#ExampleClient')
+  return getContractAddress('ExampleClient')
 }
 
 /*
@@ -243,9 +241,9 @@ export async function getExampleClientAddress() {
 
 */
 export async function connectController() {
-  return connectContract<LilypadController>('LilypadControllerModule#LilypadController')
+  return connectContract<LilypadController>('LilypadController')
 }
 
 export async function getControllerAddress() {
-  return getContractAddress('LilypadControllerModule#LilypadController')
+  return getContractAddress('LilypadController')
 }

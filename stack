@@ -6,8 +6,8 @@ export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DEFAULT_DATA_DIR="/data/geth"
 export DATA_DIRECTORY=${DATA_DIRECTORY:="$DEFAULT_DATA_DIR"}
 export NETWORK=${NETWORK:="geth"}
-# export LILYPAD_BIN=.lilypad/lilypad
-export LILYPAD_BIN=${docker-compose run -i lilypad}
+export LILYPAD_BIN=.lilypad/lilypad
+# export LILYPAD_BIN=${docker-compose run -i lilypad}
 
 # if "$DIR/.env" exists then source it
 if [[ -f "$DIR/.env" ]]; then
@@ -270,10 +270,21 @@ function run-cowsay-onchain() {
 function run() {
   source .env
   eval $(./stack print-local-dev-env)
-  export WEB3_RPC_URL=ws://127.0.0.1:8546
+  export WEB3_RPC_URL=ws://localhost:8546
   export WEB3_PRIVATE_KEY=$JOB_CREATOR_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
+  # docker-compose run -i lilypad run "$@"
+  #docker-compose run -i \
+  #  -e WEB3_CONTROLLER_ADDRESS=0xd6e1afe5cA8D00A2EFC01B89997abE2De47fdfAf \
+  #  -e WEB3_PAYMENTS_ADDRESS=0xB0f05d25e41FbC2b52013099ED9616f1206Ae21B \
+  #  -e WEB3_STORAGE_ADDRESS=0x5FeaeBfB4439F3516c74939A9D04e95AFE82C4ae \
+  #  -e WEB3_TOKEN_ADDRESS=0x976fcd02f7C4773dd89C309fBF55D5923B4c98a1 \
+  #  -e WEB3_USERS_ADDRESS=0x19cEcCd6942ad38562Ee10bAfd44776ceB67e923 \
+  #  -e SERVICE_MEDIATORS=$MEDIATOR_ADDRESS \
+  #  -e SERVICE_SOLVER=$SOLVER_ADDRESS \
+  #  -e WEB3_PRIVATE_KEY=$JOB_CREATOR_PRIVATE_KEY \
+  #  -e WEB3_RPC_URL=ws://localhost:8546 lilypad run "$@"
   $LILYPAD_BIN run "$@"
 }
 
@@ -304,20 +315,14 @@ function solver() {
   export SERVER_PORT=8080
   export SERVER_URL=http://127.0.0.1:8080
   export WEB3_RPC_URL=ws://127.0.0.1:8546
-  docker-compose run -i \
-    -e WEB3_PRIVATE_KEY=$SOLVER_PRIVATE_KEY \
-    -e JOB_CREATOR_ADDRESS=$JOB_CREATOR_ADDRESS \
-    -e SERVICE_MEDIATORS=$MEDIATOR_ADDRESS \
-    -e SERVER_PORT=8080 \
-    -e SERVER_URL=http://0.0.0.0:8080 \
-    -e WEB3_RPC_URL=ws://geth:8546 \ 
-    lilypad solver "$@"
+  $LILYPAD_BIN solver "$@"
 }
 
 # we run the jobcreator as the solver
 function jobcreator() {
   source .env
   eval $(./stack print-local-dev-env)
+  export WEB3_RPC_URL=ws://localhost:8546
   export WEB3_PRIVATE_KEY=$SOLVER_PRIVATE_KEY
   export SERVICE_SOLVER=$SOLVER_ADDRESS
   export SERVICE_MEDIATORS=$MEDIATOR_ADDRESS
