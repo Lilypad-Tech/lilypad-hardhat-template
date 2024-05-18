@@ -11,6 +11,21 @@
 [license]: https://opensource.org/licenses/MIT
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
 
+## Quickstart
+
+Super quick: Create an online [codespace](https://codespaces.new/Lilypad-Tech/lilypad-hardhat-template) using this template. Once inside the codespace, it will take a minute or two for the environment to setup and configure lilypad and it's service dependencies for the environment, via the `npm preinstall` hook.
+
+Start up lilypad and a local development environment
+```bash
+> npm run lilypad:up
+```
+
+Almost as quick: Clone this repo and run the commands yourself with VSCode + Docker.
+```bash
+> npm run lilypad:setup
+> npm run lilypad:up
+```
+
 A Hardhat-based template for developing Solidity smart contracts, with sensible defaults.
 
 - [Hardhat](https://github.com/nomiclabs/hardhat): compile, run and test smart contracts
