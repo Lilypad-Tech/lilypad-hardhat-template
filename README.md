@@ -15,12 +15,12 @@
 
 Super quick: Create an online [codespace](https://codespaces.new/Lilypad-Tech/lilypad-hardhat-template) using this template. Once inside the codespace, it will take a minute or two for the environment to setup and configure lilypad and it's service dependencies for the environment, via the `npm preinstall` hook.
 
-Start up lilypad and a local development environment
+Start up lilypad and a local development environment by opening a terminal in vscode:
 ```bash
 > npm run lilypad:up
 ```
 
-Almost as quick: Clone this repo and run the commands yourself with VSCode + Docker.
+Almost as quick: Clone this repo and run the commands yourself with local vscode + Docker:
 ```bash
 > npm run lilypad:setup
 > npm run lilypad:up
