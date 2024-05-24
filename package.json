@@ -48,7 +48,7 @@
     "access": "public"
   },
   "scripts": {
-    "preinstall": "./scripts/setup.sh",
+    "preinstall": "sudo ./scripts/setup.sh",
     "lilypad:setup": "./scripts/setup.sh",
     "lilypad:start": "./scripts/start.sh",
     "lilypad:clean": "rm -rf .lilypad",
