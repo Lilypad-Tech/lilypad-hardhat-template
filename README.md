@@ -2,6 +2,8 @@
 
 [![Open in Gitpod][gitpod-badge]][gitpod]
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Lilypad-Tech/lilypad-hardhat-template)
+
 [gitpod]: https://gitpod.io/#https://github.com/Lilypad-Tech/lilypad-hardhat-template
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
 [gha]: https://github.com/Lilypad-Tech/lilypad-hardhat-template/actions
