@@ -49,7 +49,7 @@
   },
   "scripts": {
     "preinstall": "sudo ./scripts/setup.sh",
-    "lilypad:setup": "./scripts/setup.sh",
+    "lilypad:setup": "sudo ./scripts/setup.sh",
     "lilypad:start": "./scripts/start.sh",
     "lilypad:clean": "rm -rf .lilypad",
     "lilypad:cowsay": "hardhat run scripts/run-cowsay-onchain.ts",
