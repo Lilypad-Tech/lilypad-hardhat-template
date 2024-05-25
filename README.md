@@ -18,12 +18,14 @@ Super quick: Create an online [codespace](https://codespaces.new/Lilypad-Tech/li
 Start up lilypad and a local development environment by opening a terminal in vscode:
 ```bash
 > npm run lilypad:up
+> npm run lilypad:onchain:cowsay
 ```
 
 Almost as quick: Clone this repo and run the commands yourself with local vscode + Docker:
 ```bash
 > npm run lilypad:setup
 > npm run lilypad:up
+> npm run lilypad:onchain:cowsay
 ```
 
 A Hardhat-based template for developing Solidity smart contracts, with sensible defaults.
