@@ -53,6 +53,7 @@
     "lilypad:start": "./scripts/start.sh",
     "lilypad:clean": "rm -rf .lilypad",
     "lilypad:cowsay": "./stack run cowsay:v0.0.1 -i Message='moo'",
+    "lilypad:onchain:cowsay": "./stack run-cowsay-onchain",
     "lilypad:up": "./up.sh",
     "lilypad:down": "./down.sh",
     "node": "hardhat node --network hardhat",
