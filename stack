@@ -6,7 +6,8 @@ export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DEFAULT_DATA_DIR="/data/geth"
 export DATA_DIRECTORY=${DATA_DIRECTORY:="$DEFAULT_DATA_DIR"}
 export NETWORK=${NETWORK:="geth"}
-export LILYPAD_BIN=.lilypad/lilypad
+export LILYPAD_BIN=/usr/local/bin/lilypad
+# export LILYPAD_BIN=.lilypad/lilypad
 # export LILYPAD_BIN=${docker-compose run -i lilypad}
 
 # if "$DIR/.env" exists then source it
