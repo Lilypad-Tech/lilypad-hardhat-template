@@ -32,8 +32,8 @@ if [ ! -d $LILYPAD_DIR ]; then
     #sudo apt install libc6 -y
     wget https://github.com/Lilypad-Tech/lilypad/releases/download/$LILYPAD_VERSION/$LILYPAD_BINARY
     tar xfv $LILYPAD_BINARY
-    mv $LILYPAD_BINARY $LILYPAD_DIR/lilypad
-    chmod +x $LILYPAD_DIR/lilypad
+    chmod +x $LILYPAD_BINARY
+    mv $LILYPAD_BINARY /usr/local/bin
     rm $LILYPAD_BINARY
 
     echo "Installing Bacalhau"
