@@ -21,6 +21,12 @@ Start up lilypad and a local development environment by opening a terminal in vs
 > npm run lilypad:onchain:cowsay
 ```
 
+Edit/Update `contracts/ExampleClient.sol`
+
+```bash
+> npm run deploy
+```
+
 Almost as quick: Clone this repo and run the commands yourself with local vscode + Docker:
 ```bash
 > npm run lilypad:setup
