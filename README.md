@@ -13,7 +13,7 @@
 
 ## Quickstart
 
-Super quick: Create an online [codespace](https://codespaces.new/Lilypad-Tech/lilypad-hardhat-template) using this template. Once inside the codespace, it will take a minute or two for the environment to setup and configure lilypad and it's service dependencies for the environment, via the `npm preinstall` hook.
+Super quick: Create an online [gitpod](https://gitpod.io/#https://codespaces.new/Lilypad-Tech/lilypad-hardhat-template) using this template. Once inside the codespace, it will take a minute or two for the environment to setup and configure lilypad and it's service dependencies for the environment, via the `npm preinstall` hook.
 
 Start up lilypad and a local development environment by opening a terminal in vscode:
 ```bash
